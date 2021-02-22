@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+</head>
+<body>
+    <div class="gallary">
+        <!-- 第一列 -->
+        <div class="imgBox" id="item1">
+        </div>
+        <!-- 第二列 -->
+        <div class="imgBox" id="item2">
+        </div>
+        <!-- 第三列 -->
+        <div class="imgBox" id="item3">
+        </div>
+        <!-- 第四列 -->
+        <div class="imgBox" id="item4">
+        </div>
+    </div>
+
+    <script>
+        var ws = new WebSocket("ws://127.0.0.1:5000/echo");  
+        ws.onmessage = function (event) {
+            content = document.createTextNode(event.data); 
+            console.log(content);
+            $("#time").html(content);
+
+        };
+        // 获取最小的列
+        function getMinDiv(){
+            var it1 = $('#item1');
+            var it2 = $('#item2');
+            var it3 = $('#item3');
+            var it4 = $('#item4');
+
+            var it1Height = calHeight(it1.children());
+            var it2Height = calHeight(it2.children());
+            var it3Height = calHeight(it3.children());
+            var it4Height = calHeight(it4.children());			// 计算函数单独写
+
+            var minDiv = Math.min(it1Height, it2Height, it3Height, it4Height);
+            if(minDiv == it1Height){ return it1; }
+            else if(minDiv == it2Height){ return it2; }
+            else if(minDiv == it3Height){ return it3; }
+            else{ return it4; }
+        }
+
+        // 计算列图片占用高度
+        function calHeight(imgs){
+            if(imgs == null || imgs.length == 0 ){
+                return 0;
+            }
+            else{
+                var Height = 0;
+                for (var i = 0; i < imgs.length; i++) {
+                    Height += imgs[i].height;
+                }
+                return Height;
+            }
+        }
+
+        function insertImgs(windowHeight){
+            var counter = 0;
+            var inter = setInterval(function(){
+            // console.log(windowHeight < document.documentElement.scrollHeight);
+            if( windowHeight < document.documentElement.scrollHeight || counter>10){
+                clearInterval(inter);	//清除定时器
+            }
+            var div = getMinDiv();
+            var num = Math.floor((Math.random()*10)+1);		// 获取img目录下随机10张图片
+            div.append('<img src="./img/'+num+'.png">');
+                counter += 1;
+            }, 100);
+        }
+
+        $(function(){
+            var windowHeight = window.screen.height+500;	// 屏幕高度+500，初始化图片加载占用限制高度
+            var initHeight = windowHeight;
+            var timer = null;					// 节流，防止滚动条多次执行事件
+            insertImgs(windowHeight);			//第一次加载
+            consol.log('22222222222222222222222222');
+            $(window).scroll(function(){
+                    clearTimeout(timer);
+                    // 已经滚动高度 + 屏幕高度 > 能滚动高度
+                    timer = setTimeout(function () {
+                        if($(document).scrollTop() + window.screen.height > document.documentElement.scrollHeight){
+                            insertImgs(windowHeight+=window.screen.height);
+                        }
+                    }, 1000);
+            })
+        })
+    </script>
+    </body>
+</html>

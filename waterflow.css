@@ -1,0 +1,25 @@
+
+.gallary{
+	width: 70%;
+	margin: 8px auto;
+	padding: 5px 8px;
+	background-color: #fff;
+	display: flex;							/*设置felx布局*/
+	flex-direction: row;					/*方向是横向（行）*/
+}
+.imgBox{
+	flex: 1;								/*占比为1，有四列占比就是1/4*/
+	padding: 0px;
+	margin:10px 5px;
+	width: 250px;
+}
+.imgBox img{
+	width: 100%;
+	margin:4px;
+	transition: all 0.2s ease-in-out;		/*淡入淡出*/
+}
+.imgBox img:hover{
+	cursor: pointer;
+	transform: scale(1.05);	/*放大img*/
+	box-shadow: 1px 1px 2px #777;
+}
