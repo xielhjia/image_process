@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/waterflow.css">
+</head>
+<body>
+    <div class="gallary">
+        <!-- 第一列 -->
+        <div class="imgBox" id="item1">
+        </div>
+        <!-- 第二列 -->
+        <div class="imgBox" id="item2">
+        </div>
+        <!-- 第三列 -->
+        <div class="imgBox" id="item3">
+        </div>
+        <!-- 第四列 -->
+        <div class="imgBox" id="item4">
+        </div>
+        <div class="imgBox" id="item5">
+        </div>
+        <div class="imgBox" id="item6">
+        </div>
+        <div class="imgBox" id="item7">
+        </div>
+        <div class="imgBox" id="item8">
+        </div>
+        <div class="imgBox" id="item9">
+        </div>
+        <div class="imgBox" id="item10">
+        </div>
+        <div class="imgBox" id="item11">
+        </div>
+        <div class="imgBox" id="item12">
+        </div>
+        <div class="imgBox" id="item13">
+        </div>
+        <div class="imgBox" id="item14">
+        </div>
+        <div class="imgBox" id="item15">
+        </div>
+        <div class="imgBox" id="item16">
+        </div>
+        <div class="imgBox" id="item17">
+        </div>
+        <div class="imgBox" id="item18">
+        </div>
+        <div class="imgBox" id="item19">
+        </div> 
+        <div class="imgBox" id="item20">
+        </div>
+</div>
+
+    <script>
+        // var ws = new WebSocket("ws://127.0.0.1:5000/echo");  
+        // ws.onmessage = function (event) {
+        //     content = document.createTextNode(event.data); 
+        //     console.log(content);
+        //     $("#time").html(content);
+
+        // };
+        // 获取最小的列
+        function getMinDiv(){
+            var it1 = $('#item1');
+            var it2 = $('#item2');
+            var it3 = $('#item3');
+            var it4 = $('#item4');
+            var it5 = $('#item5');
+            var it6 = $('#item6');
+            var it7 = $('#item7');
+            var it8 = $('#item8');
+            var it9 = $('#item9');
+            var it10 = $('#item10');
+            var it11 = $('#item11');
+            var it12 = $('#item12');
+            var it13 = $('#item13');
+            var it14 = $('#item14');
+            var it15 = $('#item15');
+            var it16 = $('#item16');
+            var it17 = $('#item17');
+            var it18 = $('#item18');
+            var it19 = $('#item19');
+            var it20 = $('#item20');
+
+
+
+            var it1Height = calHeight(it1.children());
+            var it2Height = calHeight(it2.children());
+            var it3Height = calHeight(it3.children());
+            var it4Height = calHeight(it4.children());			// 计算函数单独写
+            var it5Height = calHeight(it5.children());
+            var it6Height = calHeight(it6.children());
+            var it7Height = calHeight(it7.children());
+            var it8Height = calHeight(it8.children());
+            var it9Height = calHeight(it9.children());
+            var it10Height = calHeight(it10.children());
+            var it11Height = calHeight(it11.children());
+            var it12Height = calHeight(it12.children());
+            var it13Height = calHeight(it13.children());
+            var it14Height = calHeight(it14.children());
+            var it15Height = calHeight(it15.children());
+            var it16Height = calHeight(it16.children());
+            var it17Height = calHeight(it17.children());
+            var it18Height = calHeight(it18.children());
+            var it19Height = calHeight(it19.children());
+            var it20Height = calHeight(it20.children());
+
+            var minDiv = Math.min(it1Height, it2Height, it3Height, it4Height,
+                                  it5Height, it6Height, it7Height, it8Height,
+                                  it9Height, it10Height, it11Height, it12Height,
+                                  it13Height, it14Height, it15Height, it16Height,
+                                  it17Height, it18Height, it19Height, it20Height);
+            if(minDiv == it1Height){ return it1; }
+            else if(minDiv == it2Height){ return it2; }
+            else if(minDiv == it3Height){ return it3; }
+            else if(minDiv == it4Height){ return it4; }
+            else if(minDiv == it5Height){ return it5; }
+            else if(minDiv == it6Height){ return it6; }
+            else if(minDiv == it7Height){ return it7; }
+            else if(minDiv == it8Height){ return it8; }
+            else if(minDiv == it9Height){ return it9; }
+            else if(minDiv == it10Height){ return it10; }
+            else if(minDiv == it11Height){ return it11; }
+            else if(minDiv == it12Height){ return it12; }
+            else if(minDiv == it13Height){ return it13; }
+            else if(minDiv == it14Height){ return it14; }
+            else if(minDiv == it15Height){ return it15; }
+            else if(minDiv == it16Height){ return it16; }
+            else if(minDiv == it17Height){ return it17; }
+            else if(minDiv == it18Height){ return it18; }
+            else if(minDiv == it19Height){ return it19; }
+
+            else{ return it20; }
+        }
+
+        // 计算列图片占用高度
+        function calHeight(imgs){
+            if(imgs == null || imgs.length == 0 ){
+                return 0;
+            }
+            else{
+                var Height = 0;
+                for (var i = 0; i < imgs.length; i++) {
+                    Height += imgs[i].height;
+                }
+                return Height;
+            }
+        }
+
+        function insertImgs(windowHeight){
+            var counter = 0;
+
+            
+            var inter = setInterval(function(){
+                // console.log(windowHeight < document.documentElement.scrollHeight);
+                if( windowHeight < document.documentElement.scrollHeight || counter>10){
+                    clearInterval(inter);	//清除定时器
+                }
+                var div = getMinDiv();
+                var num = Math.floor((Math.random()*10)+1);		// 获取img目录下随机10张图片
+                div.append('<img src="http://127.0.0.1:8080/img/'+num+'.png">');
+                    counter += 1;
+            }, 100);
+        }
+
+        function insertImg(windowHeight) {
+            var div = getMinDiv();
+            var num = Math.floor((Math.random()*10)+1);		// 获取img目录下随机10张图片
+            div.append('<img src="http://127.0.0.1:8080/img/'+num+'.png">');
+            if($(document).scrollTop() + window.screen.height - 35 <= document.documentElement.scrollHeight){
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        }
+
+        $(function(){
+
+            var windowHeight = window.screen.height+100;	// 屏幕高度+500，初始化图片加载占用限制高度
+            var initHeight = windowHeight;
+            var timer = null;					// 节流，防止滚动条多次执行事件
+
+            var ws = new WebSocket("ws://127.0.0.1:5001/echo");  
+            ws.onmessage = function (event) {
+                content = document.createTextNode(event.data); 
+                ws.send('your message');
+
+                // console.log(content);
+                // $("#time").html(content);
+                insertImg(windowHeight);			//第一次加载
+                // $(window).scroll(function(){
+                    // console.log('22222222222222222222222222');
+                    //     clearTimeout(timer);
+                    //     // 已经滚动高度 + 屏幕高度 > 能滚动高度
+                    //     timer = setTimeout(function () {
+                            // if($(document).scrollTop() + window.screen.height > document.documentElement.scrollHeight){
+                            //     insertImg(windowHeight+=window.screen.height);
+                            // }
+                        // }, 1000);
+                // })
+            };
+
+          
+        })
+    </script>
+    </body>
+</html>

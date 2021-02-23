@@ -11,7 +11,7 @@
 	flex: 1;								/*占比为1，有四列占比就是1/4*/
 	padding: 0px;
 	margin:10px 5px;
-	width: 250px;
+	width: 50px;
 }
 .imgBox img{
 	width: 100%;
